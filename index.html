@@ -4,9 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROJECT: IKIGAI Recruitment</title>
     <style>
-      /* Persona 5 Style Recruitment Form */
-
-/* Base styles and background */
+      
 * {
     margin: 0;
     padding: 0;
@@ -40,7 +38,6 @@ body {
     100% { background-position: 80px 80px; }
 }
 
-/* Container styling */
 .container {
     max-width: 800px;
     margin: 20px auto;
@@ -56,7 +53,6 @@ body {
     overflow: hidden;
 }
 
-/* Page styling */
 .page {
     display: none;
     text-align: center;
@@ -84,7 +80,6 @@ body {
     }
 }
 
-/* Logo styling */
 .logo-container {
     margin: 20px 0;
 }
@@ -95,7 +90,6 @@ body {
     filter: drop-shadow(0 0 10px rgba(232, 35, 39, 0.8));
 }
 
-/* Typography */
 h1, h2 {
     color: #f5be41;
     text-shadow: 3px 3px 0 #000,
@@ -126,7 +120,6 @@ p {
     line-height: 1.6;
 }
 
-/* Button styling */
 .next-btn, .back-btn, .form-btn, .submit-btn {
     background: #e82327;
     color: white;
@@ -150,7 +143,6 @@ p {
     box-shadow: 0 6px 0 #c4962c;
 }
 
-/* Form element styling */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
@@ -179,7 +171,6 @@ p {
     border-color: #e82327;
 }
 
-/* Radio button styling */
 .radio-group {
     margin-bottom: 20px;
     text-align: left;
@@ -244,7 +235,6 @@ p {
     color: white;
 }
 
-/* Footer */
 .footer {
     background: rgba(0, 0, 0, 0.9);
     border-top: 3px solid #e82327;
@@ -321,7 +311,6 @@ p {
     text-decoration: underline;
 }
 
-/* Responsive footer */
 @media (max-width: 768px) {
     .footer-content {
         grid-template-columns: 1fr;
@@ -357,7 +346,6 @@ p {
 <body>
     <div class="background"></div>
     <div class="container">
-        <!-- Introduction Page -->
         <div id="introPage" class="page active">
             <div class="logo-container">
                 <img src="PROJECT Ikigai Logo.png" alt="PROJECT: IKIGAI Logo" class="logo">
@@ -368,7 +356,6 @@ p {
             <button id="continueBtn" class="form-btn" onclick="showPage('newMemberFormPage1')">Continue</button>
         </div>
 
-        <!-- New Member Form - Page 1: Basic Info -->
 <div id="newMemberFormPage1" class="page">
     <h2>New Member Application</h2>
     <form id="newMemberFormStep1">
@@ -451,13 +438,13 @@ p {
             <input type="text" id="discordUsername" name="discordUsername" required>
             <p class="note">Note: People in the organization will address you using your Discord Username or Preferred Name. Make sure you input your account username and NOT your display name.</p>
         </div>
- <!-- New question 1 -->
+ 
         <div class="form-group">
             <label for="whyJoin">Why do you want to be a part of the organization?</label>
             <textarea id="whyJoin" name="whyJoin" rows="4" placeholder="Your answer here..." required></textarea>
         </div>
 
-        <!-- New question 2 -->
+       
         <div class="form-group">
             <label for="contribution">What can you contribute to the organization?</label>
             <textarea id="contribution" name="contribution" rows="4" placeholder="Your answer here..." required></textarea>
@@ -467,7 +454,6 @@ p {
     </form>
 </div>
 
-<!-- New Member Form - Position Selection Page -->
 <div id="newMemberPositionPage" class="page">
   <h2>PROJECT: IKIGAI - Position Selection</h2>
   <form id="positionSelectionForm">
@@ -491,7 +477,6 @@ p {
       </label>
     </div>
 
-    <!-- Ancillary Board Options -->
     <div id="ancillaryOptions" class="conditional-form" style="display: none;">
       <h3>Ancillary Board Positions</h3>
       <div class="radio-group">
@@ -530,7 +515,6 @@ p {
       </div>
     </div>
 
-    <!-- Committee Options -->
     <div id="committeeOptions" class="conditional-form" style="display: none;">
       <h3>Committee Selection</h3>
       <div class="radio-group">
@@ -565,7 +549,6 @@ p {
       </div>
     </div>
 
-    <!-- Talent Options -->
     <div id="talentOptions" class="conditional-form" style="display: none;">
       <h3>Esports/Talent Selection</h3>
       <div class="radio-group">
@@ -591,7 +574,6 @@ p {
         </label>
       </div>
 
-      <!-- Orcinus Esports Team Selection Inline -->
       <div id="orcinusTeamSelection" class="conditional-form" style="display:none;">
         <h3>Select Your Orcinus Esports Team</h3>
         <div class="radio-group">
@@ -634,7 +616,6 @@ p {
         </div>
       </div>
 
-      <!-- Shoutcaster Game Selection -->
       <div id="shoutcasterGameOptions" class="conditional-form" style="display: none; margin-top: 1em;">
         <h4>Shoutcaster Game Selection</h4>
         <div class="radio-group">
@@ -662,7 +643,7 @@ p {
         </div>
       </div>
     </div>
-<!-- Portfolio & Social Media Section -->
+
    <div id="portfolioSection" style="display: none; margin-top: 15px;">
   <div class="form-group">
     <label for="portfolioLink">Portfolio (Google Drive link):</label>
@@ -682,7 +663,6 @@ p {
   </form>
 </div>
 
-<!-- Interview Schedule Page -->
 <div id="interviewSchedulePage" class="page" style="display:none;">
   <form id="interviewScheduleForm">
     <h2>Choose Interview Date</h2>
@@ -755,8 +735,6 @@ p {
   </form>
 </div>
 
-
-<!-- Thank You Page 1 - For Just Members -->
 <div id="thankYouPage1" class="page">
     <h2>Thank You!</h2>
     <div class="success-message">
@@ -768,7 +746,6 @@ p {
     <button type="button" class="back-btn" onclick="goBack()">Back</button>
 </div>
 
-<!-- Thank You Page 2 - For Position Applicants -->
 <div id="thankYouPage2" class="page">
     <h2>Thank You!</h2>
     <div class="success-message">
@@ -781,7 +758,6 @@ p {
 </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="social-icons">
@@ -798,10 +774,6 @@ p {
 
 <script>
 'use strict';
-
-/* -------------------------
-   Helper: clear inputs in a section (uncheck radios, clear text)
-   ------------------------- */
 function clearInputsInSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -815,9 +787,6 @@ function clearInputsInSection(sectionId) {
     });
 }
 
-/* -------------------------
-   Portfolio section helpers
-   ------------------------- */
 function updatePortfolioRequired(show) {
     const p = document.getElementById('portfolioLink');
     if (!p) return;
@@ -830,15 +799,14 @@ function setPortfolioVisibility(show) {
     if (!sec) return;
     sec.style.display = show ? 'block' : 'none';
     if (!show) {
-        // clear inputs if hiding
+        
         clearInputsInSection('portfolioSection');
     }
     updatePortfolioRequired(show);
 }
 
 function showPortfolioIfNeeded() {
-    // committee: 'creatives' or 'media'
-    // talent: 'artists', 'cosplayers', 'shoutcasters', 'content-creators'
+
     const committeeChecked = document.querySelector('#newMemberPositionPage input[name="committee"]:checked')?.value;
     const talentChecked = document.querySelector('#newMemberPositionPage input[name="talent"]:checked')?.value;
 
@@ -853,9 +821,7 @@ function showPortfolioIfNeeded() {
     setPortfolioVisibility(!!needsPortfolio);
 }
 
-/* -------------------------
-   Google Sheets Submission
-   ------------------------- */
+
 function sendToGoogleSheets() {
     const formData = collectFormData();
 
@@ -881,7 +847,7 @@ function submitFinalApplication() {
     .then(() => {
         console.log("Success sending application");
         alert("Your application has been successfully submitted! Thank you.");
-        // don't change page here — thank-you page is already displayed by proceedFromPosition
+        
     })
     .catch(error => {
         console.error("Error submitting application:", error);
@@ -889,9 +855,6 @@ function submitFinalApplication() {
     });
 }
 
-/* -------------------------
-   Navigation
-   ------------------------- */
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
@@ -903,7 +866,6 @@ function showPage(pageId) {
     activePage.classList.add('active');
     activePage.style.display = 'block';
 
-    // Setup validation for active page after it becomes visible
     setTimeout(() => {
         if (pageId === 'newMemberFormPage1') {
             setupFormValidation('newMemberFormStep1', '#newMemberFormPage1 .next-btn');
@@ -925,58 +887,50 @@ function goBack() {
     const currentPageId = pages[currentIndex].id;
 
     if (currentPageId === 'thankYouPage1') {
-        // From Thank You Page 1 (Member), go back to position selection page
+        
         showPage('newMemberPositionPage');
         return;
     }
 
     if (currentPageId === 'thankYouPage2') {
-        // From Thank You Page 2 (Position applicants), go back to interview schedule page
+       
         showPage('interviewSchedulePage');
         return;
     }
 
     if (currentPageId === 'interviewSchedulePage') {
-        // From interview schedule, go back to position selection
+        
         showPage('newMemberPositionPage');
         return;
     }
 
-    // Default behavior for other pages: go to previous page in DOM order
+    
     if (currentIndex > 0) {
         showPage(pages[currentIndex - 1].id);
     }
 }
 
 
-/* -------------------------
-   Position selection + clearing stale inputs
-   ------------------------- */
 function handlePositionSelection(position) {
     const ancillaryOptions = document.getElementById('ancillaryOptions');
     const committeeOptions = document.getElementById('committeeOptions');
     const talentOptions = document.getElementById('talentOptions');
 
-    // Hide and clear all groups first
     if (ancillaryOptions)  { ancillaryOptions.style.display = 'none'; clearInputsInSection('ancillaryOptions'); }
     if (committeeOptions)  { committeeOptions.style.display = 'none'; clearInputsInSection('committeeOptions'); }
     if (talentOptions)     { talentOptions.style.display = 'none'; clearInputsInSection('talentOptions'); }
 
-    // Also hide & clear nested talent sub-options
     const shoutcaster = document.getElementById('shoutcasterGameOptions');
     const orcinus   = document.getElementById('orcinusTeamSelection');
     if (shoutcaster) { shoutcaster.style.display = 'none'; clearInputsInSection('shoutcasterGameOptions'); }
     if (orcinus)     { orcinus.style.display = 'none';     clearInputsInSection('orcinusTeamSelection'); }
 
-    // Show only the selected group
     if (position === 'ancillary') ancillaryOptions.style.display = 'block';
     else if (position === 'committee') committeeOptions.style.display = 'block';
     else if (position === 'talent') talentOptions.style.display = 'block';
 
-    // Update next button state
     updateNextButtonState('positionSelectionForm', '#newMemberPositionPage .next-btn');
 
-    // Update portfolio visibility
     showPortfolioIfNeeded();
 }
 
@@ -984,11 +938,9 @@ function handleTalentSelection(value) {
     const shoutcasterGameOptions = document.getElementById('shoutcasterGameOptions');
     const orcinusTeamSelection = document.getElementById('orcinusTeamSelection');
 
-    // Hide & clear both first
     if (shoutcasterGameOptions) { shoutcasterGameOptions.style.display = 'none'; clearInputsInSection('shoutcasterGameOptions'); }
     if (orcinusTeamSelection)   { orcinusTeamSelection.style.display = 'none';   clearInputsInSection('orcinusTeamSelection'); }
 
-    // Show the selected sub-options
     if (value === 'shoutcasters') {
         shoutcasterGameOptions.style.display = 'block';
     } else if (value === 'orcinus-esports') {
@@ -997,18 +949,13 @@ function handleTalentSelection(value) {
 
     updateNextButtonState('positionSelectionForm', '#newMemberPositionPage .next-btn');
 
-    // Update portfolio visibility
     showPortfolioIfNeeded();
 }
 
-/* -------------------------
-   Validation
-   ------------------------- */
 function validateForm(formId) {
     const form = document.getElementById(formId);
     if (!form) return false;
 
-    // Step 1: Basic Info required fields
     if (formId === 'newMemberFormStep1') {
         const requiredSelectors = [
             '#fullName',
@@ -1025,13 +972,11 @@ function validateForm(formId) {
         return requiredSelectors.every(sel => {
             const el = form.querySelector(sel);
             if (!el) return false;
-            // if it's a radio/checkbox selector we already asked for ':checked' so el is the checked item
             if (el.type === 'radio' || el.type === 'checkbox') return el.checked;
             return String(el.value || '').trim().length > 0;
         });
     }
 
-    // Step 2: Position validations
     const position = form.querySelector('input[name="position"]:checked');
     if (!position) return false;
 
@@ -1045,7 +990,6 @@ function validateForm(formId) {
         if (talent.value === 'shoutcasters' && !form.querySelector('input[name="shoutcaster_game"]:checked')) return false;
     }
 
-    // All good
     return true;
 }
 
@@ -1062,10 +1006,8 @@ function setupFormValidation(formId, buttonSelector) {
     const form = document.getElementById(formId);
     if (!form) return;
 
-    // Initially set state
     updateNextButtonState(formId, buttonSelector);
 
-    // For step 1: listen to text inputs & radio changes
     if (formId === 'newMemberFormStep1') {
         const requiredTextInputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
         requiredTextInputs.forEach(inp => {
@@ -1076,21 +1018,19 @@ function setupFormValidation(formId, buttonSelector) {
         return;
     }
 
-    // For position page: listen to radio changes
     const allRadios = form.querySelectorAll('input[type="radio"]');
     allRadios.forEach(radio => {
         radio.addEventListener('change', () => {
             if (radio.name === 'talent') handleTalentSelection(radio.value);
             if (radio.name === 'position') handlePositionSelection(radio.value);
-            // always update next button
+
             updateNextButtonState(formId, buttonSelector);
-            // Update portfolio visibility whenever any position/committee/talent radio changes
+
             showPortfolioIfNeeded();
         });
     });
 }
 
-/* Initialize position page (restore UI state if user navigates back) */
 function initializePositionPage() {
     const position = document.querySelector('input[name="position"]:checked')?.value;
     if (position) {
@@ -1100,17 +1040,14 @@ function initializePositionPage() {
             if (talent) handleTalentSelection(talent);
         }
     } else {
-        // ensure Next is disabled until user picks something
+
         updateNextButtonState('positionSelectionForm', '#newMemberPositionPage .next-btn');
     }
 
-    // initialize portfolio visibility based on restored selections
+
     showPortfolioIfNeeded();
 }
 
-/* -------------------------
-   Proceed navigation (Next on position page)
-   ------------------------- */
 function proceedFromPosition() {
     const position = document.querySelector('input[name="position"]:checked')?.value;
     const talent = document.querySelector('input[name="talent"]:checked')?.value;
@@ -1130,13 +1067,9 @@ function proceedFromPosition() {
         return;
     }
 
-    // For all other positions, show interview scheduling page
     showPage('interviewSchedulePage');
 }
 
-/* -------------------------
-   Interview schedule validation + submit
-   ------------------------- */
 function validateInterviewSchedule() {
     const dateSelected = document.querySelector('input[name="interview_date"]:checked');
     const timeSelected = document.querySelector('input[name="interview_time"]:checked');
@@ -1155,10 +1088,8 @@ function setupInterviewScheduleValidation() {
     const form = document.getElementById('interviewScheduleForm');
     if (!form) return;
 
-    // Disable Next initially
     updateInterviewNextButtonState();
 
-    // Add change listeners to radio buttons
     const radios = form.querySelectorAll('input[type="radio"]');
     radios.forEach(radio => {
         radio.addEventListener('change', updateInterviewNextButtonState);
@@ -1177,13 +1108,9 @@ function submitInterviewSchedule() {
         return;
     }
 
-    // Move to thank you page
     showPage('thankYouPage2');
 }
 
-/* -------------------------
-   Data collection 
-   ------------------------- */
 function collectFormData() {
     const portfolioSection = document.getElementById('portfolioSection');
     const portfolioVisible = portfolioSection && window.getComputedStyle(portfolioSection).display !== 'none';
@@ -1214,15 +1141,10 @@ function collectFormData() {
     };
 }
 
-
-/* -------------------------
-   DOM Ready initializer - attach validation listeners only
-   (does NOT show any page by itself)
-   ------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
     setupFormValidation('newMemberFormStep1', '#newMemberFormPage1 .next-btn');
     setupFormValidation('positionSelectionForm', '#newMemberPositionPage .next-btn');
-    // initialize position page state (if user navigates back to it)
+
     initializePositionPage();
 });
 
@@ -1230,3 +1152,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
