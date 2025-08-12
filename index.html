@@ -838,6 +838,8 @@ function sendToGoogleSheets() {
 function submitFinalApplication() {
     const formData = collectFormData();
 
+    alert("Your application is being submitted. Thank you!");
+
     fetch("https://script.google.com/macros/s/AKfycbz7i2LIHIlLRikL-g2L2EphtG2k5uX-floqIE3-ww9L9o-868VoH_GeVAFlGqWxfW45/exec", {
         method: "POST",
         mode: "no-cors",
@@ -846,14 +848,12 @@ function submitFinalApplication() {
     })
     .then(() => {
         console.log("Success sending application");
-        alert("Your application has been successfully submitted! Thank you.");
-        
     })
     .catch(error => {
         console.error("Error submitting application:", error);
-        alert("There was a problem submitting your application.");
     });
 }
+
 
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => {
@@ -1152,4 +1152,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
