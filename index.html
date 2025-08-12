@@ -851,6 +851,7 @@ function submitFinalApplication() {
     })
     .catch(error => {
         console.error("Error submitting application:", error);
+        alert("There was a problem submitting your application. Please try again.");
     });
 }
 
@@ -1152,5 +1153,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
