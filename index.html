@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT: IKIGAI Recruitment</title>
+    <style>
+      
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial Black', 'Arial Bold', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    background: #000;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('pattern.png');
+    background-repeat: repeat;
+    background-size: 80px;
+    opacity: 0.9;
+    z-index: -1;
+    animation: backgroundMove 20s linear infinite;
+}
+
+@keyframes backgroundMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 80px 80px; }
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.85);
+    border: 4px solid #e82327;
+    border-radius: 0;
+    box-shadow: 0 0 30px rgba(232, 35, 39, 0.7),
+                inset 0 0 20px rgba(245, 190, 65, 0.3);
+    position: relative;
+    min-height: 80vh;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.page {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    min-height: 100%;
+    position: relative;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(80vh - 60px);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) rotateX(30deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
+}
+
+.logo-container {
+    margin: 20px 0;
+}
+
+.logo {
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(232, 35, 39, 0.8));
+}
+
+h1, h2 {
+    color: #f5be41;
+    text-shadow: 3px 3px 0 #000,
+                 4px 4px 0 rgba(232, 35, 39, 0.7);
+    margin-bottom: 25px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-left: 5px solid #e82327;
+}
+
+h2 {
+    font-size: 2.3rem;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border-left: 4px solid #f5be41;
+}
+
+p {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.next-btn, .back-btn, .form-btn, .submit-btn {
+    background: #e82327;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 15px 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1000;
+}
+
+.next-btn:hover, .back-btn:hover, .form-btn:hover, .submit-btn:hover {
+    background: #f5be41;
+    color: #000;
+    box-shadow: 0 6px 0 #c4962c;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #f5be41;
+    font-size: 1.1rem;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #f5be41;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #e82327;
+}
+
+.radio-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.radio-group > label {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #f5be41;
+    font-weight: bold;
+}
+
+.radio-option {
+    display: block;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.radio-option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 28px;
+    width: 28px;
+    background-color: #222;
+    border: 3px solid #f5be41;
+    transform: skewX(-15deg);
+}
+
+.radio-option input:checked ~ .checkmark {
+    background-color: #e82327;
+    border-color: #fff;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.radio-option input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.radio-option .checkmark:after {
+    content: '✔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) skewX(15deg);
+    font-size: 18px;
+    color: white;
+}
+
+.footer {
+    background: rgba(0, 0, 0, 0.9);
+    border-top: 3px solid #e82327;
+    padding: 40px 20px 30px;
+    position: relative;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.social-icons a {
+    display: inline-block;
+    padding: 10px;
+    background: rgba(232, 35, 39, 0.2);
+    border: 2px solid #e82327;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1);
+    transition: transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    background: #e82327;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(232, 35, 39, 0.5);
+}
+
+.footer-info {
+    color: #ffffff;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.copyright {
+    color: #f5be41;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.inquiry {
+    color: #ccc;
+    margin-bottom: 5px;
+}
+
+.inquiry a {
+    color: #e82327;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.inquiry a:hover {
+    color: #f5be41;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+}
+.form-group textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #f5be41;
+    color: white;
+    font-size: 1rem;
+    resize: vertical;
+    transition: all 0.3s ease;
+    font-family: 'Arial Black', 'Arial Bold', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #e82327;
+}
+
+.form-selection-buttons {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  gap: 15px;              /* spacing between buttons */
+  align-items: center;    /* center horizontally */
+  margin-top: 20px;
+}
+
+.form-selection-buttons .form-btn {
+  width: 250px;     /* make them equal width */
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div id="introPage" class="page active">
+            <div class="logo-container">
+                <img src="PROJECT Ikigai Logo.png" alt="PROJECT: IKIGAI Logo" class="logo">
+            </div>
+            <h1>PROJECT: IKIGAI</h1>
+            <h2>RECRUITMENT WEEK</h2>
+            <p>Welcome, future members! Click continue to start your Journey.</p>
+            <button id="continueBtn" class="form-btn" onclick="showPage('formSelectionPage')">Continue</button>
+        </div>
+
+<!-- Selection Page -->
+<div id="formSelectionPage" class="page">
+  <h2>Select Application Type</h2>
+  <p>Please choose the form you want to fill out:</p>
+  <div class="form-selection-buttons">
+    <button class="form-btn" onclick="showPage('newMemberFormPage1')">New Member Application</button>
+    <button class="form-btn" onclick="showPage('renewalFormPage1')">Renewal Form</button>
+  </div>
+
+</div>
+
+
+<div id="newMemberFormPage1" class="page">
+    <h2>New Member Application</h2>
+    <form id="newMemberFormStep1">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="ex. Zulla, Sham Jaasiel D." required>
+        </div>
+        <div class="form-group">
+            <label for="nickname">Preferred Nickname</label>
+            <input type="text" id="nickname" name="nickname" required>
+        </div>
+         <div class="radio-group">
+            <label>Gender</label>
+            <label class="radio-option">Male
+                <input type="radio" name="gender" value="Male" required>
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">Female
+                <input type="radio" name="gender" value="Female">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">Prefer not to say
+                <input type="radio" name="gender" value="Prefer not to say">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="contactNumber">Contact Number (For CSO monitoring purposes)</label>
+            <input type="text" id="contactNumber" name="contactNumber" required>
+        </div>
+        <div class="form-group">
+            <label for="studentNumber">Student Number</label>
+            <input type="text" id="studentNumber" name="studentNumber" required>
+        </div>
+         <div class="radio-group">
+            <label>College Department</label>
+            <label class="radio-option">CBAA
+                <input type="radio" name="department" value="CBAA" required>
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CCJE
+                <input type="radio" name="department" value="CCJE">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">COED
+                <input type="radio" name="department" value="COED">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CEAT
+                <input type="radio" name="department" value="CEAT">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CLAC
+                <input type="radio" name="department" value="CLAC">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">COS
+                <input type="radio" name="department" value="COS">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CICS
+                <input type="radio" name="department" value="CICS">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CTHM
+                <input type="radio" name="department" value="CTHM">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="course">Course/Year/Section</label>
+            <input type="text" id="course" name="course" placeholder="ex. BIT41" required>
+        </div>
+        <div class="form-group">
+            <label for="email">DLSU-D email</label>
+            <input type="email" id="email" name="email" placeholder="ex. abc1234@dlsud.edu.ph" required>
+        </div>
+        <div class="form-group">
+            <label for="discordUsername">Discord Username</label>
+            <input type="text" id="discordUsername" name="discordUsername" required>
+            <p class="note">Note: People in the organization will address you using your Discord Username or Preferred Name. Make sure you input your account username and NOT your display name.</p>
+        </div>
+ 
+        <div class="form-group">
+            <label for="whyJoin">Why do you want to be a part of the organization?</label>
+            <textarea id="whyJoin" name="whyJoin" rows="4" placeholder="Your answer here..." required></textarea>
+        </div>
+
+       
+        <div class="form-group">
+            <label for="contribution">What can you contribute to the organization?</label>
+            <textarea id="contribution" name="contribution" rows="4" placeholder="Your answer here..." required></textarea>
+        </div>
+        <button type="button" class="next-btn" onclick="showPage('newMemberPositionPage')">Next</button>
+    </form>
+</div>
+
+<div id="newMemberPositionPage" class="page">
+  <h2>PROJECT: IKIGAI - Position Selection</h2>
+  <form id="positionSelectionForm">
+    <div class="radio-group">
+      <label>Pick a position that you want to be in PROJECT: IKIGAI</label>
+      <label class="radio-option">Ancillary Board
+        <input type="radio" name="position" value="ancillary" onchange="handlePositionSelection(this.value)" required>
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Committee Officer
+        <input type="radio" name="position" value="committee" onchange="handlePositionSelection(this.value)">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Esports Player/Artist/Cosplayer Talents
+        <input type="radio" name="position" value="talent" onchange="handlePositionSelection(this.value)">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Just a Member
+        <input type="radio" name="position" value="member" onchange="handlePositionSelection(this.value)">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+
+    <div id="ancillaryOptions" class="conditional-form" style="display: none;">
+      <h3>Ancillary Board Positions</h3>
+      <div class="radio-group">
+        <label class="radio-option">Chief of Logistics
+          <input type="radio" name="ancillary_position" value="chief-logistics">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Chief of Creatives
+          <input type="radio" name="ancillary_position" value="chief-creatives">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Chief of External Affairs
+          <input type="radio" name="ancillary_position" value="chief-external">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Content Creator Talent Manager
+          <input type="radio" name="ancillary_position" value="content-manager">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Shoutcaster Talent Manager
+          <input type="radio" name="ancillary_position" value="shoutcaster-manager">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Teamfight Tactics Manager/Asst. Manager
+          <input type="radio" name="ancillary_position" value="tft-manager">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Marvel Rivals Manager/Asst. Manager
+          <input type="radio" name="ancillary_position" value="marvel-manager">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">LOL Asst. Manager
+          <input type="radio" name="ancillary_position" value="lol-asst">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Tekken Asst. Manager
+          <input type="radio" name="ancillary_position" value="tekken-asst">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </div>
+
+    <div id="committeeOptions" class="conditional-form" style="display: none;">
+      <h3>Committee Selection</h3>
+      <div class="radio-group">
+        <label class="radio-option">Creatives
+          <input type="radio" name="committee" value="creatives">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Communications
+          <input type="radio" name="committee" value="communications">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Research
+          <input type="radio" name="committee" value="research">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Logistics
+          <input type="radio" name="committee" value="logistics">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Media
+          <input type="radio" name="committee" value="media">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Technical
+          <input type="radio" name="committee" value="technical">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Discord Moderation
+          <input type="radio" name="committee" value="discord">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </div>
+
+    <div id="talentOptions" class="conditional-form" style="display: none;">
+      <h3>Esports/Talent Selection</h3>
+      <div class="radio-group">
+        <label class="radio-option">Domus Artis (Artists)
+          <input type="radio" name="talent" value="artists" onchange="handleTalentSelection(this.value)">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Ludi Persona (Cosplayer)
+          <input type="radio" name="talent" value="cosplayers" onchange="handleTalentSelection(this.value)">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Orcinus Esports (Esports)
+          <input type="radio" name="talent" value="orcinus-esports" onchange="handleTalentSelection(this.value)">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Vox Bellorum (Shoutcasters)
+          <input type="radio" name="talent" value="shoutcasters" onchange="handleTalentSelection(this.value)">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Digitus Dei (Content Creators)
+          <input type="radio" name="talent" value="content-creators" onchange="handleTalentSelection(this.value)">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+
+      <div id="orcinusTeamSelection" class="conditional-form" style="display:none;">
+        <h3>Select Your Orcinus Esports Team</h3>
+        <div class="radio-group">
+          <label class="radio-option">Orcinus Virtus – Valorant Main Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Virtus – Valorant Main Team" required>
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Orcinus Calypso – Valorant Academy Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Calypso – Valorant Academy Team">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Orcinus Animus – Tekken 8 Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Animus – Tekken 8 Team">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Orcinus Consilium – Teamfight Tactics Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Consilium – Teamfight Tactics Team">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Orcinus Ars Belli – League of Legends Main Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Ars Belli – League of Legends Main Team">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Orcinus Audacia – League of Legends Academy Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Audacia – League of Legends Academy Team">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Orcinus Voluntas – Marvel Rivals Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Voluntas – Marvel Rivals Team">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Orcinus Fortitudo – ML:BB Main Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Fortitudo – ML:BB Main Team">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Orcinus Clementia – ML:BB Academy Team
+            <input type="radio" name="orcinusTeam" value="Orcinus Clementia – ML:BB Academy Team">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+
+      <div id="shoutcasterGameOptions" class="conditional-form" style="display: none; margin-top: 1em;">
+        <h4>Shoutcaster Game Selection</h4>
+        <div class="radio-group">
+          <label>What game would you be a shoutcaster at?</label>
+          <label class="radio-option">League of Legends
+            <input type="radio" name="shoutcaster_game" value="lol">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Tekken
+            <input type="radio" name="shoutcaster_game" value="tekken">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Valorant
+            <input type="radio" name="shoutcaster_game" value="valorant">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Marvel Rivals
+            <input type="radio" name="shoutcaster_game" value="marvel">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Teamfight Tactics
+            <input type="radio" name="shoutcaster_game" value="tft">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+   <div id="portfolioSection" style="display: none; margin-top: 15px;">
+  <div class="form-group">
+    <label for="portfolioLink">Portfolio (Google Drive link):</label>
+    <input type="url" id="portfolioLink" name="portfolioLink" placeholder="https://drive.google.com/..." required>
+  </div>
+  <div class="form-group">
+    <label for="socialMediaLink">Social Media link(s) (optional):</label>
+    <input type="url" id="socialMediaLink" name="socialMediaLink" placeholder="https://instagram.com/yourprofile">
+  </div>
+</div>
+
+
+    <div class="form-actions">
+      <button type="button" class="next-btn" onclick="proceedFromPosition()">Next</button>
+    </div>
+  </form>
+</div>
+
+<div id="interviewSchedulePage" class="page" style="display:none;">
+  <form id="interviewScheduleForm">
+    <h2>Choose Interview Date</h2>
+    <div class="radio-group">
+      <label class="radio-option">
+        <input type="radio" name="interview_date" value="Sep 15" />
+        <span class="checkmark"></span>
+        Sep 15
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_date" value="Sep 16" />
+        <span class="checkmark"></span>
+        Sep 16
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_date" value="Sep 17" />
+        <span class="checkmark"></span>
+        Sep 17
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_date" value="Sep 18" />
+        <span class="checkmark"></span>
+        Sep 18
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_date" value="Sep 19" />
+        <span class="checkmark"></span>
+        Sep 19
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_date" value="Sep 20" />
+        <span class="checkmark"></span>
+        Sep 20
+      </label>
+    </div>
+
+    <h2>Choose Interview Time</h2>
+    <div class="radio-group">
+      <label class="radio-option">
+        <input type="radio" name="interview_time" value="6:00 pm" />
+        <span class="checkmark"></span>
+        6:00 pm
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_time" value="6:30 pm" />
+        <span class="checkmark"></span>
+        6:30 pm
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_time" value="7:00 pm" />
+        <span class="checkmark"></span>
+        7:00 pm
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_time" value="7:30 pm" />
+        <span class="checkmark"></span>
+        7:30 pm
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="interview_time" value="8:00 pm" />
+        <span class="checkmark"></span>
+        8:00 pm
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="next-btn" onclick="submitInterviewSchedule()">Next</button>
+    </div>
+  </form>
+</div>
+
+<!-- Renewal Form Start -->
+<div id="renewalFormPage1" class="page">
+    <h2>Renewal Form</h2>
+    <form id="renewalFormStep1">
+        <div class="form-group">
+            <label for="renewalfullName">Full Name</label>
+            <input type="text" id="renewalfullName" name="renewalfullName" placeholder="ex. Zulla, Sham Jaasiel D." required>
+        </div>
+        <div class="form-group">
+            <label for="renewalnickname">Preferred Nickname</label>
+            <input type="text" id="renewalnickname" name="renewalnickname" required>
+        </div>
+         <div class="radio-group">
+            <label>Gender</label>
+            <label class="radio-option">Male
+                <input type="radio" name="renewalgender" value="Male" required>
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">Female
+                <input type="radio" name="renewalgender" value="Female">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">Prefer not to say
+                <input type="radio" name="renewalgender" value="Prefer not to say">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="renewalcontactNumber">Contact Number (For CSO monitoring purposes)</label>
+            <input type="text" id="renewalcontactNumber" name="renewalcontactNumber" required>
+        </div>
+        <div class="form-group">
+            <label for="renewalstudentNumber">Student Number</label>
+            <input type="text" id="renewalstudentNumber" name="renewalstudentNumber" required>
+        </div>
+         <div class="radio-group">
+            <label>College Department</label>
+            <label class="radio-option">CBAA
+                <input type="radio" name="renewaldepartment" value="CBAA" required>
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CCJE
+                <input type="radio" name="renewaldepartment" value="CCJE">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">COED
+                <input type="radio" name="renewaldepartment" value="COED">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CEAT
+                <input type="radio" name="renewaldepartment" value="CEAT">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CLAC
+                <input type="radio" name="renewaldepartment" value="CLAC">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">COS
+                <input type="radio" name="renewaldepartment" value="COS">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CICS
+                <input type="radio" name="renewaldepartment" value="CICS">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-option">CTHM
+                <input type="radio" name="renewaldepartment" value="CTHM">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="renewalcourse">Course/Year/Section</label>
+            <input type="text" id="renewalcourse" name="renewalcourse" placeholder="ex. BIT41" required>
+        </div>
+        <div class="form-group">
+            <label for="renewalemail">DLSU-D email</label>
+            <input type="email" id="renewalemail" name="renewalemail" placeholder="ex. abc1234@dlsud.edu.ph" required>
+        </div>
+        <div class="form-group">
+            <label for="renewaldiscordUsername">Discord Username</label>
+            <input type="text" id="renewaldiscordUsername" name="renewaldiscordUsername" required>
+            <p class="note">Note: People in the organization will address you using your Discord Username or Preferred Name. Make sure you input your account username and NOT your display name.</p>
+        </div>
+ 
+        <div class="form-group">
+            <label for="renewalwhyJoin">Why do you want to continue being part of the organization?</label>
+            <textarea id="renewalwhyJoin" name="renewalwhyJoin" rows="4" placeholder="Your answer here..." required></textarea>
+        </div>
+
+       
+        <div class="form-group">
+            <label for="renewalcontribution">What can you contribute to the organization?</label>
+            <textarea id="renewalcontribution" name="renewalcontribution" rows="4" placeholder="Your answer here..." required></textarea>
+        </div>
+   <button id="nextBtnRenewal1" type="button" class="next-btn" onclick="showPage('renewalPreviousPositionPage')">Next</button>
+    </form>
+</div>
+
+   <div id="renewalPreviousPositionPage" class="page">
+            <h2>Membership Renewal - Previous Position</h2>
+            <form id="renewalPreviousPositionForm">
+                <div class="form-group">
+                    <label>What was your Previous position in the Organization?</label>
+                    <div class="radio-group">
+                        <label class="radio-option">Executive Board
+                            <input type="radio" name="previousPosition" value="Executive Board" required>
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radio-option">Legislative Board
+                            <input type="radio" name="previousPosition" value="Legislative Board">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radio-option">Committee Officer
+                            <input type="radio" name="previousPosition" value="Committee Officer">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radio-option">Esports Player/ Artist & Cosplayer Talents
+                            <input type="radio" name="previousPosition" value="Esports Player/Artist & Cosplayer Talents">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radio-option">Member
+                            <input type="radio" name="previousPosition" value="Member">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button id="nextBtnRenewal2" type="button" class="next-btn" onclick="showPage('renewalPositionChoicePage')">Next</button>
+                </div>
+            </form>
+        </div>
+
+<div id="renewalPositionChoicePage" class="page">
+  <h2>Do you want to keep your current position or apply for another?</h2>
+  <div class="radio-group">
+    <label class="radio-option">
+      <input type="radio" name="renewal_position_choice" value="keep" />
+      <span class="checkmark"></span>
+      Keep Current Position
+    </label>
+    <label class="radio-option">
+      <input type="radio" name="renewal_position_choice" value="apply" />
+      <span class="checkmark"></span>
+      Apply for Another Position
+    </label>
+  </div>
+
+  <div class="form-actions">
+    <button id="nextBtnRenewal3" type="button" class="next-btn" onclick="proceedFromRenewalPosition()">Next</button>
+  </div>
+</div>
+
+
+ 
+<!-- Renewal - Apply Position Page -->
+<div id="renewalApplyPositionPage" class="page">
+  <h2>Membership Renewal - Apply for Position</h2>
+  <form id="renewalApplyPositionForm">
+    <div class="form-group">
+      <label>Where do you want to apply for a position?</label>
+      <div class="radio-group">
+        <label class="radio-option">Ancillary Board
+          <input type="radio" name="renewalApplyPosition" value="Ancillary Board" required onchange="handleRenewalApplyPosition(this.value)">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Committee
+          <input type="radio" name="renewalApplyPosition" value="Committee" onchange="handleRenewalApplyPosition(this.value)">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Esports/Talents
+          <input type="radio" name="renewalApplyPosition" value="Esports/Talents" onchange="handleRenewalApplyPosition(this.value)">
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-option">Member
+          <input type="radio" name="renewalApplyPosition" value="Member" onchange="handleRenewalApplyPosition(this.value)">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Ancillary Board Options -->
+    <div id="renewalAncillaryOptions" class="conditional-form" style="display: none;">
+      <h3>Ancillary Board Positions</h3>
+      <div class="form-group">
+        <label>Which Ancillary Board position do you want to apply for?</label>
+        <div class="radio-group">
+          <label class="radio-option">Chief of Logistics
+            <input type="radio" name="renewalAncillaryPosition" value="chief of logistics">
+            <span class="checkmark"></span>
+          </label>
+        <label class="radio-option">Chief of Creatives
+          <input type="radio" name="renewalAncillaryPosition" value="chief-creatives">
+          <span class="checkmark"></span>
+        </label>
+          <label class="radio-option">Chief of Media
+            <input type="radio" name="renewalAncillaryPosition" value="chief of media">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Chief of Tech
+            <input type="radio" name="renewalAncillaryPosition" value="chief of tech">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Chief of External Affairs
+            <input type="radio" name="renewalAncillaryPosition" value="chief of external affairs">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Content Creator Talent Manager
+            <input type="radio" name="renewalAncillaryPosition" value="content creator talent manager">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Shoutcaster Talent Manager
+            <input type="radio" name="renewalAncillaryPosition" value="shoutcaster talent manager">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Teamfight Tactics Manager/Asst. Manager
+            <input type="radio" name="renewalAncillaryPosition" value="teamfight tactics manager/asst. manager">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Marvel Rivals Manager/Asst. Manager
+            <input type="radio" name="renewalAncillaryPosition" value="marvel rivals manager/asst. manager">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">LOL Asst. Manager
+            <input type="radio" name="renewalAncillaryPosition" value="lol asst manager">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Tekken Asst. Manager
+            <input type="radio" name="renewalAncillaryPosition" value="tekken asst manager">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Committee Options -->
+    <div id="renewalCommitteeOptions" class="conditional-form" style="display: none;">
+      <h3>Committee Selection</h3>
+      <div class="form-group">
+        <label>Which Committee do you want to apply for?</label>
+        <div class="radio-group">
+          <label class="radio-option">Creatives
+            <input type="radio" name="renewalCommittee" value="creatives" onclick="handleRenewalCommitteeSelection(this.value)">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Communications
+            <input type="radio" name="renewalCommittee" value="communications" onclick="handleRenewalCommitteeSelection(this.value)">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Research
+            <input type="radio" name="renewalCommittee" value="research" onclick="handleRenewalCommitteeSelection(this.value)">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Logistics
+            <input type="radio" name="renewalCommittee" value="logistics" onclick="handleRenewalCommitteeSelection(this.value)">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Media
+            <input type="radio" name="renewalCommittee" value="media" onclick="handleRenewalCommitteeSelection(this.value)">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Technical
+            <input type="radio" name="renewalCommittee" value="technical" onclick="handleRenewalCommitteeSelection(this.value)">
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-option">Discord Moderation
+            <input type="radio" name="renewalCommittee" value="discord moderation" onclick="handleRenewalCommitteeSelection(this.value)">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+                <!-- Esports/Talent Options (Renewal) -->
+<div id="renewalTalentOptions" class="conditional-form" style="display: none;">
+  <h3>Esports/Talent Selection</h3>
+  <div class="radio-group">
+    <label class="radio-option">Domus Artis (Artists)
+      <input type="radio" name="renewalTalent" value="artists" onchange="handleRenewalTalentSelection(this.value)">
+      <span class="checkmark"></span>
+    </label>
+    <label class="radio-option">Ludi Persona (Cosplayer)
+      <input type="radio" name="renewalTalent" value="cosplayers" onchange="handleRenewalTalentSelection(this.value)">
+      <span class="checkmark"></span>
+    </label>
+    <label class="radio-option">Orcinus Esports (Esports)
+      <input type="radio" name="renewalTalent" value="orcinus-esports" onchange="handleRenewalTalentSelection(this.value)">
+      <span class="checkmark"></span>
+    </label>
+    <label class="radio-option">Vox Bellorum (Shoutcasters)
+      <input type="radio" name="renewalTalent" value="shoutcasters" onchange="handleRenewalTalentSelection(this.value)">
+      <span class="checkmark"></span>
+    </label>
+    <label class="radio-option">Digitus Dei (Content Creators)
+      <input type="radio" name="renewalTalent" value="content-creators" onchange="handleRenewalTalentSelection(this.value)">
+      <span class="checkmark"></span>
+    </label>
+  </div>
+
+  <!-- Orcinus Esports Sub-teams -->
+  <div id="renewalOrcinusTeamSelection" class="conditional-form" style="display:none;">
+    <h3>Select Your Orcinus Esports Team</h3>
+    <div class="radio-group">
+      <label class="radio-option">Orcinus Virtus – Valorant Main Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Virtus – Valorant Main Team">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Orcinus Calypso – Valorant Academy Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Calypso – Valorant Academy Team">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Orcinus Animus – Tekken 8 Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Animus – Tekken 8 Team">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Orcinus Consilium – Teamfight Tactics Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Consilium – Teamfight Tactics Team">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Orcinus Ars Belli – League of Legends Main Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Ars Belli – League of Legends Main Team">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Orcinus Audacia – League of Legends Academy Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Audacia – League of Legends Academy Team">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Orcinus Voluntas – Marvel Rivals Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Voluntas – Marvel Rivals Team">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Orcinus Fortitudo – ML:BB Main Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Fortitudo – ML:BB Main Team">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Orcinus Clementia – ML:BB Academy Team
+        <input type="radio" name="renewalOrcinusTeam" value="Orcinus Clementia – ML:BB Academy Team">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Shoutcaster Game Selection -->
+  <div id="renewalShoutcasterGameOptions" class="conditional-form" style="display: none; margin-top: 1em;">
+    <h4>Shoutcaster Game Selection</h4>
+    <div class="radio-group">
+      <label class="radio-option">League of Legends
+        <input type="radio" name="renewalShoutcasterGame" value="lol">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Tekken
+        <input type="radio" name="renewalShoutcasterGame" value="tekken">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Valorant
+        <input type="radio" name="renewalShoutcasterGame" value="valorant">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Marvel Rivals
+        <input type="radio" name="renewalShoutcasterGame" value="marvel">
+        <span class="checkmark"></span>
+      </label>
+      <label class="radio-option">Teamfight Tactics
+        <input type="radio" name="renewalShoutcasterGame" value="tft">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- Portfolio + Social Media Section (Renewal) -->
+<div id="renewalPortfolioSection" style="display: none; margin-top: 15px;">
+  <div class="form-group">
+    <label for="renewalPortfolioLink">Portfolio (Google Drive link):</label>
+    <input type="url" id="renewalPortfolioLink" name="renewalPortfolioLink" placeholder="https://drive.google.com/...">
+  </div>
+  <div class="form-group">
+    <label for="renewalSocialMediaLink">Social Media link(s) (optional):</label>
+    <input type="url" id="renewalSocialMediaLink" name="renewalSocialMediaLink" placeholder="https://instagram.com/yourprofile">
+  </div>
+</div>
+
+
+ <div class="form-navigation">
+      <button id="nextBtnRenewal4" type="button" class="next-btn" onclick="goNextFromRenewalApply()">Next</button>
+    </div>
+  </form>
+</div>
+
+<!-- Renewal Interview Page -->
+<div id="renewalInterviewPage" class="page">
+  <form id="interviewScheduleForm">
+    <h2>Choose Interview Date</h2>
+    <div class="radio-group">
+      <label class="radio-option"><input type="radio" name="interview_date" value="Sep 15" /><span class="checkmark"></span>Sep 15</label>
+      <label class="radio-option"><input type="radio" name="interview_date" value="Sep 16" /><span class="checkmark"></span>Sep 16</label>
+      <label class="radio-option"><input type="radio" name="interview_date" value="Sep 17" /><span class="checkmark"></span>Sep 17</label>
+      <label class="radio-option"><input type="radio" name="interview_date" value="Sep 18" /><span class="checkmark"></span>Sep 18</label>
+      <label class="radio-option"><input type="radio" name="interview_date" value="Sep 19" /><span class="checkmark"></span>Sep 19</label>
+      <label class="radio-option"><input type="radio" name="interview_date" value="Sep 20" /><span class="checkmark"></span>Sep 20</label>
+    </div>
+
+    <h2>Choose Interview Time</h2>
+    <div class="radio-group">
+      <label class="radio-option"><input type="radio" name="renewal_interview_time" value="6:00 pm"><span class="checkmark"></span>6:00 pm</label>
+      <label class="radio-option"><input type="radio" name="renewal_interview_time" value="6:30 pm"><span class="checkmark"></span>6:30 pm</label>
+      <label class="radio-option"><input type="radio" name="renewal_interview_time" value="7:00 pm"><span class="checkmark"></span>7:00 pm</label>
+      <label class="radio-option"><input type="radio" name="renewal_interview_time" value="7:30 pm"><span class="checkmark"></span>7:30 pm</label>
+      <label class="radio-option"><input type="radio" name="renewal_interview_time" value="8:00 pm"><span class="checkmark"></span>8:00 pm</label>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-navigation">
+      <button id="nextBtnRenewal5" type="button" class="next-btn" onclick="goNextFromRenewalInterview()">Next</button>
+    </div>
+
+</div>
+<!-- Renewal Success Page -->
+<div id="renewalThankYouPage1" class="page">
+    <h2>Thank You!</h2>
+    <div class="success-message">
+        <p>🎉 Your renewal application has been submitted!</p>
+        <p>As a member, you'll receive updates about PROJECT: IKIGAI activities and events.</p>
+        <p>Expect an email from us by September for the link to our New Discord Server.</p>
+    </div>
+    <button type="button" class="submit-btn" onclick="submitRenewalApplication()">Submit Renewal</button>
+</div>
+
+<div id="renewalThankYouPage2" class="page">
+    <h2>Thank You!</h2>
+    <div class="success-message">
+        <p>🎉 Your renewal application has been submitted!</p>
+        <p>Your application for the selected position will be under review.</p>
+        <p>Expect an email from us by September for the link to our New Discord Server.</p>
+    </div>
+    <button type="button" class="submit-btn" onclick="submitRenewalApplication()">Submit Renewal</button>
+</div>
+
+<!-- Renewal Form End -->
+
+
+
+<div id="thankYouPage1" class="page">
+    <h2>Thank You!</h2>
+    <div class="success-message">
+        <p>🎉 Submit your application!</p>
+        <p>Your application for the selected position will be under review.</p>
+        <p>Expect an email from us by September for the link to our New Discord Server.</p>
+    </div>
+    <button type="button" class="submit-btn" onclick="submitFinalApplication()">Submit Application</button>
+</div>
+
+<div id="thankYouPage2" class="page">
+    <h2>Thank You!</h2>
+    <div class="success-message">
+        <p>🎉 Submit your application!</p>
+        <p>Your application for the selected position will be under review.</p>
+        <p>Expect an email from us by September for your interview and the link to our discord server</p>
+    </div>
+    <button type="button" class="submit-btn" onclick="submitFinalApplication()">Submit Application</button>
+</div>
+
+  </form>
+</div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="https://www.facebook.com/projectikigai.dlsud" target="_blank" aria-label="Facebook">
+                    <img src="facebook-icon.svg" alt="Facebook">
+                </a>
+            </div>
+            <div class="footer-info">
+                <p class="copyright">© 2024 PROJECT: IKIGAI. All rights reserved.</p>
+                <p class="inquiry">For inquiries, contact us at our facebook page</p>
+                <p>De La Salle University - Dasmariñas</p>
+            </div>
+        </div> 
+
+<script>
+'use strict';
+function updatePortfolioRequired(show) {
+    const p = document.getElementById('portfolioLink');
+    if (!p) return;
+    if (show) p.setAttribute('required', 'required');
+    else p.removeAttribute('required');
+}
+
+function setPortfolioVisibility(show) {
+    const sec = document.getElementById('portfolioSection');
+    if (!sec) return;
+    sec.style.display = show ? 'block' : 'none';
+    if (!show) {
+        
+        clearInputsInSection('portfolioSection');
+    }
+    updatePortfolioRequired(show);
+}
+
+function showPortfolioIfNeeded() {
+
+    const committeeChecked = document.querySelector('#newMemberPositionPage input[name="committee"]:checked')?.value;
+    const talentChecked = document.querySelector('#newMemberPositionPage input[name="talent"]:checked')?.value;
+
+    const needsPortfolio =
+        committeeChecked === 'creatives' ||
+        committeeChecked === 'media' ||
+        talentChecked === 'artists' ||
+        talentChecked === 'cosplayers' ||
+        talentChecked === 'shoutcasters' ||
+        talentChecked === 'content-creators';
+
+    setPortfolioVisibility(!!needsPortfolio);
+}
+
+
+function sendToGoogleSheets() {
+    const formData = collectFormData();
+
+    fetch("https://script.google.com/macros/s/AKfycbxWhj4Ympo9Wn2-_FjOhPYgb5xYjxasrIQG9oB3GEx20s7Q0PB4f9l6yJDVNcGuOrfg/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    })
+    .then(() => console.log("Data sent to Google Sheets successfully"))
+    .catch(err => console.error("Error sending to Google Sheets:", err));
+}
+
+function submitRenewalApplication() {
+    const formData = collectRenewalFormData();
+
+    alert("Your application has been submitted. Thank you!");
+
+    fetch("https://script.google.com/macros/s/AKfycbxWhj4Ympo9Wn2-_FjOhPYgb5xYjxasrIQG9oB3GEx20s7Q0PB4f9l6yJDVNcGuOrfg/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    })
+    .then(() => {
+        console.log("Success sending application");
+    })
+    .catch(error => {
+        console.error("Error submitting application:", error);
+        alert("There was a problem submitting your application. Please try again.");
+    });
+}
+
+
+
+
+function sendToGoogleSheets() {
+    const formData = collectFormData();
+
+    fetch("https://script.google.com/macros/s/AKfycbz7i2LIHIlLRikL-g2L2EphtG2k5uX-floqIE3-ww9L9o-868VoH_GeVAFlGqWxfW45/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    })
+    .then(() => console.log("Data sent to Google Sheets successfully"))
+    .catch(err => console.error("Error sending to Google Sheets:", err));
+}
+
+function submitFinalApplication() {
+    const formData = collectFormData();
+
+    alert("Your application has been submitted. Thank you!");
+
+    fetch("https://script.google.com/macros/s/AKfycbz7i2LIHIlLRikL-g2L2EphtG2k5uX-floqIE3-ww9L9o-868VoH_GeVAFlGqWxfW45/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    })
+    .then(() => {
+        console.log("Success sending application");
+    })
+    .catch(error => {
+        console.error("Error submitting application:", error);
+        alert("There was a problem submitting your application. Please try again.");
+    });
+}
+
+
+
+function handlePositionSelection(position) {
+    const ancillaryOptions = document.getElementById('ancillaryOptions');
+    const committeeOptions = document.getElementById('committeeOptions');
+    const talentOptions = document.getElementById('talentOptions');
+
+    if (ancillaryOptions)  { ancillaryOptions.style.display = 'none'; clearInputsInSection('ancillaryOptions'); }
+    if (committeeOptions)  { committeeOptions.style.display = 'none'; clearInputsInSection('committeeOptions'); }
+    if (talentOptions)     { talentOptions.style.display = 'none'; clearInputsInSection('talentOptions'); }
+
+    const shoutcaster = document.getElementById('shoutcasterGameOptions');
+    const orcinus   = document.getElementById('orcinusTeamSelection');
+    if (shoutcaster) { shoutcaster.style.display = 'none'; clearInputsInSection('shoutcasterGameOptions'); }
+    if (orcinus)     { orcinus.style.display = 'none';     clearInputsInSection('orcinusTeamSelection'); }
+
+    if (position === 'ancillary') ancillaryOptions.style.display = 'block';
+    else if (position === 'committee') committeeOptions.style.display = 'block';
+    else if (position === 'talent') talentOptions.style.display = 'block';
+
+    updateNextButtonState('positionSelectionForm', '#newMemberPositionPage .next-btn');
+
+    showPortfolioIfNeeded();
+}
+
+function handleTalentSelection(value) {
+    const shoutcasterGameOptions = document.getElementById('shoutcasterGameOptions');
+    const orcinusTeamSelection = document.getElementById('orcinusTeamSelection');
+
+    if (shoutcasterGameOptions) { shoutcasterGameOptions.style.display = 'none'; clearInputsInSection('shoutcasterGameOptions'); }
+    if (orcinusTeamSelection)   { orcinusTeamSelection.style.display = 'none';   clearInputsInSection('orcinusTeamSelection'); }
+
+    if (value === 'shoutcasters') {
+        shoutcasterGameOptions.style.display = 'block';
+    } else if (value === 'orcinus-esports') {
+        orcinusTeamSelection.style.display = 'block';
+    }
+
+    updateNextButtonState('positionSelectionForm', '#newMemberPositionPage .next-btn');
+
+    showPortfolioIfNeeded();
+}
+
+function validateForm(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return false;
+
+    if (formId === 'newMemberFormStep1') {
+        const requiredSelectors = [
+            '#fullName',
+            '#nickname',
+            'input[name="gender"]:checked',
+            '#contactNumber',
+            '#studentNumber',
+            'input[name="department"]:checked',
+            '#course',
+            '#email',
+            '#discordUsername'
+        ];
+
+        return requiredSelectors.every(sel => {
+            const el = form.querySelector(sel);
+            if (!el) return false;
+            if (el.type === 'radio' || el.type === 'checkbox') return el.checked;
+            return String(el.value || '').trim().length > 0;
+        });
+    }
+
+    const position = form.querySelector('input[name="position"]:checked');
+    if (!position) return false;
+
+    if (position.value === 'ancillary' && !form.querySelector('input[name="ancillary_position"]:checked')) return false;
+    if (position.value === 'committee' && !form.querySelector('input[name="committee"]:checked')) return false;
+    if (position.value === 'talent') {
+        const talent = form.querySelector('input[name="talent"]:checked');
+        if (!talent) return false;
+
+        if (talent.value === 'orcinus-esports' && !form.querySelector('input[name="orcinusTeam"]:checked')) return false;
+        if (talent.value === 'shoutcasters' && !form.querySelector('input[name="shoutcaster_game"]:checked')) return false;
+    }
+
+    return true;
+}
+
+function updateNextButtonState(formId, buttonSelector) {
+    const button = document.querySelector(buttonSelector);
+    if (!button) return;
+    const isValid = validateForm(formId);
+    button.disabled = !isValid;
+    button.style.opacity = isValid ? '1' : '0.5';
+    button.style.cursor  = isValid ? 'pointer' : 'not-allowed';
+}
+
+function setupFormValidation(formId, buttonSelector) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+
+    updateNextButtonState(formId, buttonSelector);
+
+    if (formId === 'newMemberFormStep1') {
+        const requiredTextInputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
+        requiredTextInputs.forEach(inp => {
+            inp.addEventListener('input', () => updateNextButtonState(formId, buttonSelector));
+        });
+        const radios = form.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => r.addEventListener('change', () => updateNextButtonState(formId, buttonSelector)));
+        return;
+    }
+
+    const allRadios = form.querySelectorAll('input[type="radio"]');
+    allRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.name === 'talent') handleTalentSelection(radio.value);
+            if (radio.name === 'position') handlePositionSelection(radio.value);
+
+            updateNextButtonState(formId, buttonSelector);
+
+            showPortfolioIfNeeded();
+        });
+    });
+}
+
+function initializePositionPage() {
+    const position = document.querySelector('input[name="position"]:checked')?.value;
+    if (position) {
+        handlePositionSelection(position);
+        if (position === 'talent') {
+            const talent = document.querySelector('input[name="talent"]:checked')?.value;
+            if (talent) handleTalentSelection(talent);
+        }
+    } else {
+
+        updateNextButtonState('positionSelectionForm', '#newMemberPositionPage .next-btn');
+    }
+
+
+    showPortfolioIfNeeded();
+}
+
+function proceedFromPosition() {
+    const position = document.querySelector('input[name="position"]:checked')?.value;
+    const talent = document.querySelector('input[name="talent"]:checked')?.value;
+
+    if (!position) {
+        alert("Please select a position before proceeding.");
+        return;
+    }
+
+    if (position === 'member') {
+        showPage('thankYouPage1');
+        return;
+    }
+
+    if (position === 'talent' && talent === 'orcinus-esports') {
+        showPage('thankYouPage2');
+        return;
+    }
+
+    showPage('interviewSchedulePage');
+}
+
+function validateInterviewSchedule() {
+    const dateSelected = document.querySelector('input[name="interview_date"]:checked');
+    const timeSelected = document.querySelector('input[name="interview_time"]:checked');
+    return dateSelected && timeSelected;
+}
+
+function updateInterviewNextButtonState() {
+    const btn = document.querySelector('#interviewSchedulePage .next-btn');
+    if (!btn) return;
+    btn.disabled = !validateInterviewSchedule();
+    btn.style.opacity = btn.disabled ? '0.5' : '1';
+    btn.style.cursor = btn.disabled ? 'not-allowed' : 'pointer';
+}
+
+function setupInterviewScheduleValidation() {
+    const form = document.getElementById('interviewScheduleForm');
+    if (!form) return;
+
+    updateInterviewNextButtonState();
+
+    const radios = form.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', updateInterviewNextButtonState);
+    });
+}
+
+function submitInterviewSchedule() {
+    const selectedDate = document.querySelector('input[name="interview_date"]:checked');
+    const selectedTime = document.querySelector('input[name="interview_time"]:checked');
+
+    console.log("Selected date:", selectedDate?.value);
+    console.log("Selected time:", selectedTime?.value);
+
+    if (!selectedDate || !selectedTime) {
+        alert("Please select both a date and a time for your interview.");
+        return;
+    }
+
+    showPage('thankYouPage2');
+}
+
+'use strict';
+
+/* ------------------------------
+   ✅ Validation
+--------------------------------*/
+function validateSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (!section) return true;
+
+  // All text/select/textarea with required
+  const requiredInputs = section.querySelectorAll("input[required], select[required], textarea[required]");
+
+  // Check them first
+  for (let input of requiredInputs) {
+    if (input.type === "radio" || input.type === "checkbox") {
+      const groupChecked = section.querySelectorAll(`input[name="${input.name}"]:checked`);
+      if (groupChecked.length === 0) return false;
+    } else if (!input.value.trim()) {
+      return false;
+    }
+  }
+
+  // ✅ Extra check: if the section has any radio groups, require at least one to be picked
+  const radios = section.querySelectorAll("input[type='radio']");
+  const radioNames = [...new Set([...radios].map(r => r.name))];
+  for (let name of radioNames) {
+    const checked = section.querySelector(`input[name="${name}"]:checked`);
+    if (!checked) return false;
+  }
+
+  return true;
+}
+
+
+/* ------------------------------
+   ✅ Clearing
+--------------------------------*/
+function clearInputsInSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  const inputs = section.querySelectorAll("input, select, textarea");
+  inputs.forEach(input => {
+    if (input.type === "radio" || input.type === "checkbox") {
+      input.checked = false;
+    } else {
+      input.value = "";
+    }
+  });
+}
+
+/* ------------------------------
+   ✅ Renewal Logic
+--------------------------------*/
+function proceedFromRenewalPosition() {
+    const selected = document.querySelector('input[name="renewal_position_choice"]:checked');
+    const previous = document.querySelector('input[name="previousPosition"]:checked');
+
+    if (!selected || !previous) {
+        return; // button should already be disabled if not selected
+    }
+
+    if (selected.value === "keep") {
+        if (previous.value === "Member") {
+            // ✅ Member keeping same position → Thank You Page 1
+            showPage("renewalThankYouPage1");
+        } else {
+            // ✅ Officers/committees keeping their position → Thank You Page 2
+            showPage("renewalThankYouPage2");
+        }
+    } else if (selected.value === "apply") {
+        // ✅ Go to application flow
+        showPage("renewalApplyPositionPage");
+    }
+}
+
+function handleRenewalApplyPosition(value) {
+  // hide + reset all conditional sections
+  const conditionalSections = [
+    "renewalAncillaryOptions",
+    "renewalCommitteeOptions",
+    "renewalTalentOptions",
+    "renewalPortfolioSection",
+    "renewalOrcinusTeamSelection",
+    "renewalShoutcasterGameOptions"
+  ];
+  conditionalSections.forEach(sec => {
+    document.getElementById(sec).style.display = "none";
+    clearInputsInSection(sec);
+  });
+
+  // show relevant section
+  if (value === "Ancillary Board") {
+    document.getElementById("renewalAncillaryOptions").style.display = "block";
+  } else if (value === "Committee") {
+    document.getElementById("renewalCommitteeOptions").style.display = "block";
+  } else if (value === "Esports/Talents") {
+    document.getElementById("renewalTalentOptions").style.display = "block";
+  }
+}
+
+function handleRenewalCommitteeSelection(value) {
+  document.getElementById("renewalPortfolioSection").style.display = "none";
+  clearInputsInSection("renewalPortfolioSection");
+
+  if (value === "creatives" || value === "media") {
+    document.getElementById("renewalPortfolioSection").style.display = "block";
+  }
+}
+
+function handleRenewalTalentSelection(value) {
+  // hide + reset
+  ["renewalPortfolioSection", "renewalOrcinusTeamSelection", "renewalShoutcasterGameOptions"]
+    .forEach(sec => {
+      document.getElementById(sec).style.display = "none";
+      clearInputsInSection(sec);
+    });
+
+  if (value === "artists" || value === "cosplayers" || value === "content-creators") {
+    document.getElementById("renewalPortfolioSection").style.display = "block";
+  } else if (value === "orcinus-esports") {
+    document.getElementById("renewalOrcinusTeamSelection").style.display = "block";
+  } else if (value === "shoutcasters") {
+    document.getElementById("renewalShoutcasterGameOptions").style.display = "block";
+    document.getElementById("renewalPortfolioSection").style.display = "block";
+  }
+}
+
+function goNextFromRenewalApply() {
+  const selected = document.querySelector('input[name="renewalApplyPosition"]:checked');
+  if (!selected) return;
+
+  // If "Member" → straight to Thank You Page 1
+  if (selected.value === "Member") {
+    showPage("renewalThankYouPage1");
+  } 
+  // If "Esports/Talents" → check sub-selection
+  else if (selected.value === "Esports/Talents") {
+    const talentSelected = document.querySelector('input[name="renewalTalent"]:checked');
+    if (!talentSelected) {
+      alert("Please select a specific esports/talent role.");
+      return;
+    }
+
+    if (talentSelected.value === "orcinus-esports") {
+      // ✅ Esports team → straight to Thank You Page 2
+      showPage("renewalThankYouPage2");
+    } else {
+      // Other talents (artists, cosplayers, shoutcasters, etc.) → interview flow
+      showPage("renewalInterviewPage");
+    }
+  } 
+  // All other positions (Committee, Ancillary, etc.) → interview flow
+  else {
+    showPage("renewalInterviewPage");
+  }
+}
+
+
+function goNextFromRenewalInterview() {
+  if (!validateSection("renewalInterviewPage")) return;
+
+  const selected = document.querySelector('input[name="renewal_interview_time"]:checked');
+  if (!selected) {
+    alert("Please select an interview time before continuing.");
+    return;
+  }
+
+  showPage("renewalThankYouPage2");
+}
+
+// Keep track of navigation history
+let pageHistory = [];
+
+function showPage(pageId) {
+  // Hide all pages
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.remove("active");
+    p.style.display = "none";
+  });
+
+  const activePage = document.getElementById(pageId);
+  if (!activePage) return;
+
+  activePage.classList.add("active");
+  activePage.style.display = "block";
+
+  // Track navigation
+  if (pageHistory[pageHistory.length - 1] !== pageId) {
+    pageHistory.push(pageId);
+  }
+
+  /* --------------------
+     New Member setup
+  -------------------- */
+  if (pageId === "newMemberFormPage1") {
+    setupFormValidation("newMemberFormStep1", "#newMemberFormPage1 .next-btn");
+    updateNextButtonState("newMemberFormStep1", "#newMemberFormPage1 .next-btn");
+  } 
+  else if (pageId === "newMemberPositionPage") {
+    setupFormValidation("positionSelectionForm", "#newMemberPositionPage .next-btn");
+    initializePositionPage();
+    updateNextButtonState("positionSelectionForm", "#newMemberPositionPage .next-btn");
+  } 
+  else if (pageId === "interviewSchedulePage") {
+    setupInterviewScheduleValidation();
+    updateInterviewNextButtonState();
+  }
+
+/* --------------------
+   Renewal setup
+-------------------- */
+if (pageId.startsWith("renewal")) {
+  const nextBtn = activePage.querySelector(".next-btn");
+
+  if (pageId === "renewalFormPage1") {
+    if (nextBtn) {
+      nextBtn.onclick = () => showPage("renewalPreviousPositionPage");
+    }
+  } 
+  else if (pageId === "renewalPreviousPositionPage") {
+    if (nextBtn) {
+      nextBtn.onclick = () => showPage("renewalPositionChoicePage");
+    }
+  } 
+  else if (pageId === "renewalPositionChoicePage") {
+    if (nextBtn) {
+      // enable/disable based on required inputs
+      updateRenewalNextButtonState(pageId, `#${pageId} .next-btn`);
+
+      const inputs = activePage.querySelectorAll("input, select, textarea");
+      inputs.forEach(inp => {
+        ["input", "change"].forEach(evt => {
+          inp.addEventListener(evt, () => {
+            updateRenewalNextButtonState(pageId, `#${pageId} .next-btn`);
+          });
+        });
+      });
+
+      nextBtn.onclick = () => {
+        proceedFromRenewalPosition();
+      };
+    }
+  } 
+else if (pageId === "renewalApplyPositionPage") {
+  const nextBtn = document.getElementById("nextBtnRenewal4");
+  if (nextBtn) {
+    // Watch inputs inside the page, not just the form
+    const inputs = activePage.querySelectorAll("input, select, textarea");
+
+    function checkValidity() {
+      let allValid = false;
+
+      // ✅ Rule 1: must pick a main position
+      const position = activePage.querySelector('input[name="renewalApplyPosition"]:checked');
+      if (position) {
+        allValid = true;
+
+        // ✅ Rule 2: if "Committee", must pick a committee
+        if (position.value === "Committee") {
+          const committee = activePage.querySelector('input[name="renewalCommittee"]:checked');
+          allValid = !!committee;
+        }
+
+        // ✅ Rule 3: if "Esports/Talents", must pick a talent
+        if (position.value === "Esports/Talents") {
+          const talent = activePage.querySelector('input[name="renewalTalent"]:checked');
+          allValid = !!talent;
+
+          // If orcinus, must also pick a subteam
+          if (talent && talent.value === "orcinus-esports") {
+            const team = activePage.querySelector('input[name="renewalOrcinusTeam"]:checked');
+            allValid = !!team;
+          }
+
+          // If shoutcasters, must also pick a game
+          if (talent && talent.value === "shoutcasters") {
+            const game = activePage.querySelector('input[name="renewalShoutcasterGame"]:checked');
+            allValid = !!game;
+          }
+        }
+
+        // ✅ Rule 4: if "Creatives" or "Media" → require portfolio link
+        if (position.value === "Committee") {
+          const comm = activePage.querySelector('input[name="renewalCommittee"]:checked');
+          if (comm && (comm.value === "creatives" || comm.value === "media")) {
+            const port = document.getElementById("renewalPortfolioLink");
+            allValid = port && port.value.trim() !== "";
+          }
+        }
+      }
+
+      nextBtn.disabled = !allValid;
+    }
+
+    // Attach listeners to all inputs
+    inputs.forEach(inp => {
+      ["input", "change"].forEach(evt => inp.addEventListener(evt, checkValidity));
+    });
+
+    // Run initial check
+    checkValidity();
+
+    // Next button action
+    nextBtn.onclick = () => {
+      if (!nextBtn.disabled) {
+        goNextFromRenewalApply();
+      }
+    };
+  }
+}
+
+  else if (pageId === "renewalInterviewPage") {
+    if (nextBtn) {
+      updateRenewalNextButtonState(pageId, `#${pageId} .next-btn`);
+      const inputs = activePage.querySelectorAll("input, select, textarea");
+      inputs.forEach(inp => {
+        ["input", "change"].forEach(evt => {
+          inp.addEventListener(evt, () => {
+            updateRenewalNextButtonState(pageId, `#${pageId} .next-btn`);
+          });
+        });
+      });
+
+      nextBtn.onclick = () => {
+        goNextFromRenewalInterview();
+      };
+    }
+  }
+}
+
+
+}
+
+
+function updateRenewalNextButtonState(sectionId, buttonSelector) {
+  const button = document.querySelector(buttonSelector);
+  if (!button) return;
+
+  const isValid = validateSection(sectionId);
+  button.disabled = !isValid;
+  button.style.opacity = isValid ? "1" : "0.5";
+  button.style.cursor = isValid ? "pointer" : "not-allowed";
+}
+
+function validatePageInputs(pageId, nextBtnId) {
+  const page = document.getElementById(pageId);
+  const nextBtn = document.getElementById(nextBtnId);
+
+  function checkValidity() {
+    let valid = true;
+
+    page.querySelectorAll("input, textarea, select").forEach(input => {
+      if (input.hasAttribute("required")) {
+        if (input.type === "radio") {
+          const group = page.querySelectorAll(`input[name='${input.name}']`);
+          if (![...group].some(r => r.checked)) {
+            valid = false;
+          }
+        } else if (!input.value.trim()) {
+          valid = false;
+        }
+      }
+    });
+
+    nextBtn.disabled = !valid;
+  }
+
+  // Run initially and whenever input changes
+  page.addEventListener("input", checkValidity);
+  page.addEventListener("change", checkValidity);
+  checkValidity();
+}
+
+
+function collectFormData() {
+    const portfolioSection = document.getElementById('portfolioSection');
+    const portfolioVisible = portfolioSection && window.getComputedStyle(portfolioSection).display !== 'none';
+
+    return {
+        form_type: 'New Member',
+        full_name: document.querySelector('#newMemberFormPage1 #fullName')?.value || '',
+        nickname: document.querySelector('#newMemberFormPage1 #nickname')?.value || '',
+        gender: document.querySelector('#newMemberFormPage1 input[name="gender"]:checked')?.value || '',
+        contact_number: document.querySelector('#newMemberFormPage1 #contactNumber')?.value || '',
+        student_number: document.querySelector('#newMemberFormPage1 #studentNumber')?.value || '',
+        department: document.querySelector('#newMemberFormPage1 input[name="department"]:checked')?.value || '',
+        course: document.querySelector('#newMemberFormPage1 #course')?.value || '',
+        email: document.querySelector('#newMemberFormPage1 #email')?.value || '',
+        discord_username: document.querySelector('#newMemberFormPage1 #discordUsername')?.value || '',
+        why_join: document.querySelector('#newMemberFormPage1 #whyJoin')?.value || '',
+        contribution: document.querySelector('#newMemberFormPage1 #contribution')?.value || '',
+        position: document.querySelector('#newMemberPositionPage input[name="position"]:checked')?.value || '',
+        ancillary_position: document.querySelector('#newMemberPositionPage input[name="ancillary_position"]:checked')?.value || '',
+        committee: document.querySelector('#newMemberPositionPage input[name="committee"]:checked')?.value || '',
+        talent: document.querySelector('#newMemberPositionPage input[name="talent"]:checked')?.value || '',
+        shoutcaster_game: document.querySelector('#newMemberPositionPage input[name="shoutcaster_game"]:checked')?.value || '',
+        orcinus_team: document.querySelector('#newMemberPositionPage input[name="orcinusTeam"]:checked')?.value || '',
+        portfolioLink: portfolioVisible ? (document.getElementById('portfolioLink')?.value || '') : '',
+        socialMediaLink: portfolioVisible ? (document.getElementById('socialMediaLink')?.value || '') : '',
+        interview_date: document.querySelector('#interviewSchedulePage input[name="interview_date"]:checked')?.value || '',
+        interview_time: document.querySelector('#interviewSchedulePage input[name="interview_time"]:checked')?.value || ''
+    };
+}
+
+function collectRenewalFormData() {
+    const portfolioSection = document.getElementById('renewalPortfolioSection');
+    const portfolioVisible = portfolioSection && window.getComputedStyle(portfolioSection).display !== 'none';
+
+    return {
+        form_type: 'Renewal',
+        renewalfullName: document.querySelector('#renewalFormPage1 #renewalfullName')?.value || '',
+        renewalnickname: document.querySelector('#renewalFormPage1 #renewalnickname')?.value || '',
+        renewalgender: document.querySelector('#renewalFormPage1 input[name="renewalgender"]:checked')?.value || '',
+        renewalcontactNumber: document.querySelector('#renewalFormPage1 #renewalcontactNumber')?.value || '',
+        renewalstudentNumber: document.querySelector('#renewalFormPage1 #renewalstudentNumber')?.value || '',
+        renewaldepartment: document.querySelector('#renewalFormPage1 input[name="renewaldepartment"]:checked')?.value || '',
+        renewalcourse: document.querySelector('#renewalFormPage1 #renewalcourse')?.value || '',
+        renewalemail: document.querySelector('#renewalFormPage1 #renewalemail')?.value || '',
+        renewaldiscordUsername: document.querySelector('#renewalFormPage1 #renewaldiscordUsername')?.value || '',
+        renewalwhyJoin: document.querySelector('#renewalFormPage1 #renewalwhyJoin')?.value || '',
+        renewalcontribution: document.querySelector('#renewalFormPage1 #renewalcontribution')?.value || '',
+
+        // 🔹 FIXED
+        previousPosition: document.querySelector('#renewalPreviousPositionPage input[name="previousPosition"]:checked')?.value || '',
+        renewal_position_choice: document.querySelector('#renewalPositionChoicePage input[name="renewal_position_choice"]:checked')?.value || '',
+
+        renewalApplyPosition: document.querySelector('#renewalApplyPositionPage input[name="renewalApplyPosition"]:checked')?.value || '',
+        renewalAncillaryPosition: document.querySelector('#renewalAncillaryOptions input[name="renewalAncillaryPosition"]:checked')?.value || '',
+        renewalCommittee: document.querySelector('#renewalCommitteeOptions input[name="renewalCommittee"]:checked')?.value || '',
+        renewalTalent: document.querySelector('#renewalTalentOptions input[name="renewalTalent"]:checked')?.value || '',
+        renewalOrcinusTeam: document.querySelector('#renewalOrcinusTeamSelection input[name="renewalOrcinusTeam"]:checked')?.value || '',
+        renewalShoutcasterGame: document.querySelector('#renewalShoutcasterGameOptions input[name="renewalShoutcasterGame"]:checked')?.value || '',
+
+        renewalPortfolioLink: portfolioVisible ? (document.getElementById('renewalPortfolioLink')?.value || '') : '',
+        renewalSocialMediaLink: portfolioVisible ? (document.getElementById('renewalSocialMediaLink')?.value || '') : '',
+
+        interview_date: document.querySelector('#renewalInterviewPage input[name="interview_date"]:checked')?.value || '',
+        renewal_interview_time: document.querySelector('#renewalInterviewPage input[name="renewal_interview_time"]:checked')?.value || ''
+    };
+}
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
