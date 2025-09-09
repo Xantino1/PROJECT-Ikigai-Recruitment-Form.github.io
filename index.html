@@ -917,8 +917,6 @@ p {
 </div>
 
 
- 
-<!-- Renewal - Apply Position Page -->
 <div id="renewalApplyPositionPage" class="page">
   <h2>Membership Renewal - Apply for Position</h2>
   <form id="renewalApplyPositionForm">
@@ -944,7 +942,6 @@ p {
       </div>
     </div>
 
-    <!-- Ancillary Board Options -->
     <div id="renewalAncillaryOptions" class="conditional-form" style="display: none;">
       <h3>Ancillary Board Positions</h3>
       <div class="form-group">
@@ -998,7 +995,6 @@ p {
       </div>
     </div>
 
-    <!-- Committee Options -->
     <div id="renewalCommitteeOptions" class="conditional-form" style="display: none;">
       <h3>Committee Selection</h3>
       <div class="form-group">
@@ -1035,7 +1031,7 @@ p {
         </div>
       </div>
     </div>
-                <!-- Esports/Talent Options (Renewal) -->
+
 <div id="renewalTalentOptions" class="conditional-form" style="display: none;">
   <h3>Esports/Talent Selection</h3>
   <div class="radio-group">
@@ -1061,7 +1057,6 @@ p {
     </label>
   </div>
 
-  <!-- Orcinus Esports Sub-teams -->
   <div id="renewalOrcinusTeamSelection" class="conditional-form" style="display:none;">
     <h3>Select Your Orcinus Esports Team</h3>
     <div class="radio-group">
@@ -1104,7 +1099,6 @@ p {
     </div>
   </div>
 
-  <!-- Shoutcaster Game Selection -->
   <div id="renewalShoutcasterGameOptions" class="conditional-form" style="display: none; margin-top: 1em;">
     <h4>Shoutcaster Game Selection</h4>
     <div class="radio-group">
@@ -1132,7 +1126,6 @@ p {
   </div>
 </div>
 
-<!-- Portfolio + Social Media Section (Renewal) -->
 <div id="renewalPortfolioSection" style="display: none; margin-top: 15px;">
   <div class="form-group">
     <label for="renewalPortfolioLink">Portfolio (Google Drive link):</label>
@@ -1151,7 +1144,6 @@ p {
   </form>
 </div>
 
-<!-- Renewal Interview Page -->
 <div id="renewalInterviewPage" class="page">
   <form id="interviewScheduleForm">
     <h2>Choose Interview Date</h2>
@@ -1173,13 +1165,11 @@ p {
       <label class="radio-option"><input type="radio" name="renewal_interview_time" value="8:00 pm"><span class="checkmark"></span>8:00 pm</label>
     </div>
 
-    <!-- Navigation Buttons -->
     <div class="form-navigation">
       <button id="nextBtnRenewal5" type="button" class="next-btn" onclick="goNextFromRenewalInterview()">Next</button>
     </div>
 
 </div>
-<!-- Renewal Success Page -->
 <div id="renewalThankYouPage1" class="page">
     <h2>Thank You!</h2>
     <div class="success-message">
@@ -1552,14 +1542,10 @@ function submitInterviewSchedule() {
 
 'use strict';
 
-/* ------------------------------
-   ✅ Validation
---------------------------------*/
 function validateSection(sectionId) {
   const section = document.getElementById(sectionId);
   if (!section) return true;
 
-  // All text/select/textarea with required
   const requiredInputs = section.querySelectorAll("input[required], select[required], textarea[required]");
 
   // Check them first
@@ -1572,7 +1558,6 @@ function validateSection(sectionId) {
     }
   }
 
-  // ✅ Extra check: if the section has any radio groups, require at least one to be picked
   const radios = section.querySelectorAll("input[type='radio']");
   const radioNames = [...new Set([...radios].map(r => r.name))];
   for (let name of radioNames) {
@@ -1583,10 +1568,6 @@ function validateSection(sectionId) {
   return true;
 }
 
-
-/* ------------------------------
-   ✅ Clearing
---------------------------------*/
 function clearInputsInSection(sectionId) {
   const section = document.getElementById(sectionId);
   if (!section) return;
@@ -1600,33 +1581,30 @@ function clearInputsInSection(sectionId) {
   });
 }
 
-/* ------------------------------
-   ✅ Renewal Logic
---------------------------------*/
 function proceedFromRenewalPosition() {
     const selected = document.querySelector('input[name="renewal_position_choice"]:checked');
     const previous = document.querySelector('input[name="previousPosition"]:checked');
 
     if (!selected || !previous) {
-        return; // button should already be disabled if not selected
+        return; 
     }
 
     if (selected.value === "keep") {
         if (previous.value === "Member") {
-            // ✅ Member keeping same position → Thank You Page 1
+
             showPage("renewalThankYouPage1");
         } else {
-            // ✅ Officers/committees keeping their position → Thank You Page 2
+
             showPage("renewalThankYouPage2");
         }
     } else if (selected.value === "apply") {
-        // ✅ Go to application flow
+
         showPage("renewalApplyPositionPage");
     }
 }
 
 function handleRenewalApplyPosition(value) {
-  // hide + reset all conditional sections
+
   const conditionalSections = [
     "renewalAncillaryOptions",
     "renewalCommitteeOptions",
@@ -1640,7 +1618,6 @@ function handleRenewalApplyPosition(value) {
     clearInputsInSection(sec);
   });
 
-  // show relevant section
   if (value === "Ancillary Board") {
     document.getElementById("renewalAncillaryOptions").style.display = "block";
   } else if (value === "Committee") {
@@ -1660,7 +1637,7 @@ function handleRenewalCommitteeSelection(value) {
 }
 
 function handleRenewalTalentSelection(value) {
-  // hide + reset
+    
   ["renewalPortfolioSection", "renewalOrcinusTeamSelection", "renewalShoutcasterGameOptions"]
     .forEach(sec => {
       document.getElementById(sec).style.display = "none";
@@ -1681,11 +1658,10 @@ function goNextFromRenewalApply() {
   const selected = document.querySelector('input[name="renewalApplyPosition"]:checked');
   if (!selected) return;
 
-  // If "Member" → straight to Thank You Page 1
   if (selected.value === "Member") {
     showPage("renewalThankYouPage1");
   } 
-  // If "Esports/Talents" → check sub-selection
+
   else if (selected.value === "Esports/Talents") {
     const talentSelected = document.querySelector('input[name="renewalTalent"]:checked');
     if (!talentSelected) {
@@ -1694,14 +1670,14 @@ function goNextFromRenewalApply() {
     }
 
     if (talentSelected.value === "orcinus-esports") {
-      // ✅ Esports team → straight to Thank You Page 2
+
       showPage("renewalThankYouPage2");
     } else {
-      // Other talents (artists, cosplayers, shoutcasters, etc.) → interview flow
+
       showPage("renewalInterviewPage");
     }
   } 
-  // All other positions (Committee, Ancillary, etc.) → interview flow
+
   else {
     showPage("renewalInterviewPage");
   }
@@ -1720,11 +1696,10 @@ function goNextFromRenewalInterview() {
   showPage("renewalThankYouPage2");
 }
 
-// Keep track of navigation history
 let pageHistory = [];
 
 function showPage(pageId) {
-  // Hide all pages
+
   document.querySelectorAll(".page").forEach(p => {
     p.classList.remove("active");
     p.style.display = "none";
@@ -1736,14 +1711,10 @@ function showPage(pageId) {
   activePage.classList.add("active");
   activePage.style.display = "block";
 
-  // Track navigation
   if (pageHistory[pageHistory.length - 1] !== pageId) {
     pageHistory.push(pageId);
   }
 
-  /* --------------------
-     New Member setup
-  -------------------- */
   if (pageId === "newMemberFormPage1") {
     setupFormValidation("newMemberFormStep1", "#newMemberFormPage1 .next-btn");
     updateNextButtonState("newMemberFormStep1", "#newMemberFormPage1 .next-btn");
@@ -1758,9 +1729,6 @@ function showPage(pageId) {
     updateInterviewNextButtonState();
   }
 
-/* --------------------
-   Renewal setup
--------------------- */
 if (pageId.startsWith("renewal")) {
   const nextBtn = activePage.querySelector(".next-btn");
 
@@ -1776,7 +1744,7 @@ if (pageId.startsWith("renewal")) {
   } 
   else if (pageId === "renewalPositionChoicePage") {
     if (nextBtn) {
-      // enable/disable based on required inputs
+
       updateRenewalNextButtonState(pageId, `#${pageId} .next-btn`);
 
       const inputs = activePage.querySelectorAll("input, select, textarea");
@@ -1796,42 +1764,37 @@ if (pageId.startsWith("renewal")) {
 else if (pageId === "renewalApplyPositionPage") {
   const nextBtn = document.getElementById("nextBtnRenewal4");
   if (nextBtn) {
-    // Watch inputs inside the page, not just the form
+
     const inputs = activePage.querySelectorAll("input, select, textarea");
 
     function checkValidity() {
       let allValid = false;
 
-      // ✅ Rule 1: must pick a main position
       const position = activePage.querySelector('input[name="renewalApplyPosition"]:checked');
       if (position) {
         allValid = true;
 
-        // ✅ Rule 2: if "Committee", must pick a committee
         if (position.value === "Committee") {
           const committee = activePage.querySelector('input[name="renewalCommittee"]:checked');
           allValid = !!committee;
         }
 
-        // ✅ Rule 3: if "Esports/Talents", must pick a talent
         if (position.value === "Esports/Talents") {
           const talent = activePage.querySelector('input[name="renewalTalent"]:checked');
           allValid = !!talent;
 
-          // If orcinus, must also pick a subteam
+
           if (talent && talent.value === "orcinus-esports") {
             const team = activePage.querySelector('input[name="renewalOrcinusTeam"]:checked');
             allValid = !!team;
           }
 
-          // If shoutcasters, must also pick a game
           if (talent && talent.value === "shoutcasters") {
             const game = activePage.querySelector('input[name="renewalShoutcasterGame"]:checked');
             allValid = !!game;
           }
         }
 
-        // ✅ Rule 4: if "Creatives" or "Media" → require portfolio link
         if (position.value === "Committee") {
           const comm = activePage.querySelector('input[name="renewalCommittee"]:checked');
           if (comm && (comm.value === "creatives" || comm.value === "media")) {
@@ -1844,15 +1807,12 @@ else if (pageId === "renewalApplyPositionPage") {
       nextBtn.disabled = !allValid;
     }
 
-    // Attach listeners to all inputs
     inputs.forEach(inp => {
       ["input", "change"].forEach(evt => inp.addEventListener(evt, checkValidity));
     });
 
-    // Run initial check
     checkValidity();
 
-    // Next button action
     nextBtn.onclick = () => {
       if (!nextBtn.disabled) {
         goNextFromRenewalApply();
@@ -1917,7 +1877,6 @@ function validatePageInputs(pageId, nextBtnId) {
     nextBtn.disabled = !valid;
   }
 
-  // Run initially and whenever input changes
   page.addEventListener("input", checkValidity);
   page.addEventListener("change", checkValidity);
   checkValidity();
@@ -1972,7 +1931,6 @@ function collectRenewalFormData() {
         renewalwhyJoin: document.querySelector('#renewalFormPage1 #renewalwhyJoin')?.value || '',
         renewalcontribution: document.querySelector('#renewalFormPage1 #renewalcontribution')?.value || '',
 
-        // 🔹 FIXED
         previousPosition: document.querySelector('#renewalPreviousPositionPage input[name="previousPosition"]:checked')?.value || '',
         renewal_position_choice: document.querySelector('#renewalPositionChoicePage input[name="renewal_position_choice"]:checked')?.value || '',
 
@@ -1997,6 +1955,7 @@ function collectRenewalFormData() {
 
 </body>
 </html>
+
 
 
 
